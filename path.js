@@ -1,13 +1,13 @@
 /* ========================================================================= */
 /* ==== Floor ============================================================== */
 
-function standard_getNextTile(parameters) {
+function getNextTile_floortype_fixed(parameters) {
 
   // keep old impossible tracks if not using mutable floors
   return cw_createFloorTile(parameters['tile_position'], (Math.random()*3 - 1.5) * 1.5*parameters['k']/maxFloorTiles);
 }
 
-function mutable_getNextTile(parameters) {
+function getNextTile_floortype_mutable(parameters) {
 
   // if path is mutable over races, create smoother tracks
   return cw_createFloorTile(parameters['tile_position'], (Math.random()*3 - 1.5) * 1.2*parameters['k']/maxFloorTiles);
@@ -24,11 +24,7 @@ function cw_createFloor() {
   if (floor_type == "floortype_mutable") {
     floorseed = btoa(Math.seedrandom());
   }
-  if (floor_type != "floortype_mutable") {
-    get_next_tile = standard_getNextTile;
-  } else {
-    get_next_tile = mutable_getNextTile;
-  }
+  get_next_tile = this["getNextTile_" + floor_type];
   for(var k = 0; k < maxFloorTiles; k++) {
     tile_parameters = {
         'tile_position': tile_position,
