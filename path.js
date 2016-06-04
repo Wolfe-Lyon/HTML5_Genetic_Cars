@@ -13,6 +13,11 @@ function getNextTile_floortype_mutable(parameters) {
   return cw_createFloorTile(parameters['tile_position'], (Math.random()*3 - 1.5) * 1.2*parameters['k']/maxFloorTiles);
 }
 
+function getNextTile_floortype_flat(parameters) {
+
+  return cw_createFloorTile(parameters['tile_position'], 0);
+}
+
 function cw_createFloor() {
   var last_tile = null;
   var tile_position = new b2Vec2(-5,0);
