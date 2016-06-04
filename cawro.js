@@ -876,7 +876,6 @@ function cw_newRound() {
   if (mutable_floor) {
     // GHOST DISABLED
     ghost = null;
-    floorseed = btoa(Math.seedrandom());
 
     world = new b2World(gravity, doSleep);
     cw_createFloor();
