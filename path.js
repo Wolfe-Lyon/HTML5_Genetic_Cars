@@ -1,6 +1,16 @@
 /* ========================================================================= */
 /* ==== Floor ============================================================== */
 
+function standard_getNextTile(defn) {
+
+      return cw_createFloorTile(defn['tile_position'], (Math.random()*3 - 1.5) * 1.5*defn['k']/maxFloorTiles);
+}
+
+function mutable_getNextTile(defn) {
+
+      return cw_createFloorTile(defn['tile_position'], (Math.random()*3 - 1.5) * 1.2*defn['k']/maxFloorTiles);
+}
+
 function cw_createFloor() {
   var last_tile = null;
   var tile_position = new b2Vec2(-5,0);
@@ -12,10 +22,16 @@ function cw_createFloor() {
   for(var k = 0; k < maxFloorTiles; k++) {
     if (!mutable_floor) {
       // keep old impossible tracks if not using mutable floors
-      last_tile = cw_createFloorTile(tile_position, (Math.random()*3 - 1.5) * 1.5*k/maxFloorTiles);
+      last_tile = standard_getNextTile({
+        'tile_position': tile_position,
+        'k': k
+      });
     } else {
       // if path is mutable over races, create smoother tracks
-      last_tile = cw_createFloorTile(tile_position, (Math.random()*3 - 1.5) * 1.2*k/maxFloorTiles);
+      last_tile = mutable_getNextTile({
+        'tile_position': tile_position,
+        'k': k
+      });
     }
     cw_floorTiles.push(last_tile);
     last_fixture = last_tile.GetFixtureList();
