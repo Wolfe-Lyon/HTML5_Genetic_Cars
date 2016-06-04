@@ -14,24 +14,24 @@ function mutable_getNextTile(defn) {
 function cw_createFloor() {
   var last_tile = null;
   var tile_position = new b2Vec2(-5,0);
+  var tile_parameters;
+
   cw_floorTiles = new Array();
   Math.seedrandom(floorseed);
   if (floor_type == "floortype_mutable") {
     floorseed = btoa(Math.seedrandom());
   }
   for(var k = 0; k < maxFloorTiles; k++) {
+    tile_parameters = {
+        'tile_position': tile_position,
+        'k': k
+    };
     if (floor_type != "floortype_mutable") {
       // keep old impossible tracks if not using mutable floors
-      last_tile = standard_getNextTile({
-        'tile_position': tile_position,
-        'k': k
-      });
+      last_tile = standard_getNextTile(tile_parameters);
     } else {
       // if path is mutable over races, create smoother tracks
-      last_tile = mutable_getNextTile({
-        'tile_position': tile_position,
-        'k': k
-      });
+      last_tile = mutable_getNextTile(tile_parameters);
     }
     cw_floorTiles.push(last_tile);
     last_fixture = last_tile.GetFixtureList();
