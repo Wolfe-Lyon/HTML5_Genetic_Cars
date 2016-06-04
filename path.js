@@ -18,6 +18,19 @@ function getNextTile_floortype_flat(parameters) {
   return cw_createFloorTile(parameters['tile_position'], 0);
 }
 
+function getNextTile_floortype_hills(parameters) {
+  var k;
+  var angle;
+
+  k = parameters['k'];
+  if (k < 10) {
+    angle = 0;
+  } else {
+    angle = 0.01 * k * Math.cos(k / 4);
+  }
+  return cw_createFloorTile(parameters['tile_position'], angle);
+}
+
 function cw_createFloor() {
   var last_tile = null;
   var tile_position = new b2Vec2(-5,0);
