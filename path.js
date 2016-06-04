@@ -1,14 +1,16 @@
 /* ========================================================================= */
 /* ==== Floor ============================================================== */
 
-function standard_getNextTile(defn) {
+function standard_getNextTile(parameters) {
 
-      return cw_createFloorTile(defn['tile_position'], (Math.random()*3 - 1.5) * 1.5*defn['k']/maxFloorTiles);
+  // keep old impossible tracks if not using mutable floors
+  return cw_createFloorTile(parameters['tile_position'], (Math.random()*3 - 1.5) * 1.5*parameters['k']/maxFloorTiles);
 }
 
-function mutable_getNextTile(defn) {
+function mutable_getNextTile(parameters) {
 
-      return cw_createFloorTile(defn['tile_position'], (Math.random()*3 - 1.5) * 1.2*defn['k']/maxFloorTiles);
+  // if path is mutable over races, create smoother tracks
+  return cw_createFloorTile(parameters['tile_position'], (Math.random()*3 - 1.5) * 1.2*parameters['k']/maxFloorTiles);
 }
 
 function cw_createFloor() {
@@ -23,10 +25,8 @@ function cw_createFloor() {
     floorseed = btoa(Math.seedrandom());
   }
   if (floor_type != "floortype_mutable") {
-    // keep old impossible tracks if not using mutable floors
     get_next_tile = standard_getNextTile;
   } else {
-    // if path is mutable over races, create smoother tracks
     get_next_tile = mutable_getNextTile;
   }
   for(var k = 0; k < maxFloorTiles; k++) {
