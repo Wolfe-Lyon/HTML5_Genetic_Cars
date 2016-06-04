@@ -16,11 +16,11 @@ function cw_createFloor() {
   var tile_position = new b2Vec2(-5,0);
   cw_floorTiles = new Array();
   Math.seedrandom(floorseed);
-  if (mutable_floor) {
+  if (floor_type == "floortype_mutable") {
     floorseed = btoa(Math.seedrandom());
   }
   for(var k = 0; k < maxFloorTiles; k++) {
-    if (!mutable_floor) {
+    if (floor_type != "floortype_mutable") {
       // keep old impossible tracks if not using mutable floors
       last_tile = standard_getNextTile({
         'tile_position': tile_position,

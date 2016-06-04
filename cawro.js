@@ -54,7 +54,7 @@ var world;
 
 var zoom = 70;
 
-var mutable_floor = false;
+var floor_type = "floortype_fixed";
 
 var maxFloorTiles = 200;
 var cw_floorTiles = new Array();
@@ -578,8 +578,8 @@ function cw_setMutationRange(range) {
   mutation_range = parseFloat(range);
 }
 
-function cw_setMutableFloor(choice) {
-  mutable_floor = (choice==1);
+function cw_setFloorType(choice) {
+  floor_type = choice;
 }
 
 function cw_setGravity(choice) {
@@ -873,7 +873,7 @@ function cw_findLeader() {
 }
 
 function cw_newRound() {
-  if (mutable_floor) {
+  if (floor_type == "floortype_mutable") {
     // GHOST DISABLED
     ghost = null;
 
