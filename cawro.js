@@ -55,6 +55,7 @@ var world;
 var zoom = 70;
 
 var floor_type = "floortype_fixed";
+var prev_floor_type = floor_type;
 
 var maxFloorTiles = 200;
 var cw_floorTiles = new Array();
@@ -579,6 +580,7 @@ function cw_setMutationRange(range) {
 }
 
 function cw_setFloorType(choice) {
+  prev_floor_type = floor_type;
   floor_type = choice;
 }
 
@@ -873,13 +875,17 @@ function cw_findLeader() {
 }
 
 function cw_newRound() {
-  if (floor_type == "floortype_mutable") {
-    // GHOST DISABLED
-    ghost = null;
 
+  if ((floor_type != prev_floor_type) || (floor_type == "floortype_mutable")) {
+    prev_floor_type = floor_type;
     world = new b2World(gravity, doSleep);
     cw_createFloor();
     cw_drawMiniMap();
+  }
+
+  if (floor_type == "floortype_mutable") {
+    // GHOST DISABLED
+    ghost = null;
   } else {
     // RE-ENABLE GHOST
     ghost_reset_ghost(ghost);
